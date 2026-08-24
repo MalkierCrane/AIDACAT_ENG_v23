@@ -1,0 +1,113 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "01 Create Python venv",
+            "type": "shell",
+            "command": "python -m venv test_env",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "02 Install Python requirements",
+            "type": "shell",
+            "command": "& \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\" -m pip install --upgrade pip; & \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\" -m pip install -r requirements.txt",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "03 Check Python path",
+            "type": "shell",
+            "command": "Test-Path \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\"; Test-Path \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\python\\florence_caption.py\"; Test-Path \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\python\\semantic_similarity.py\"; Test-Path \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\sample_images\\1002674143_1b742ab4b8.jpg\"",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "04 Test Florence only",
+            "type": "shell",
+            "command": "& \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\" \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\python\\florence_caption.py\" \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\sample_images\\1002674143_1b742ab4b8.jpg\"",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "05 Build C++",
+            "type": "shell",
+            "command": ".\\build_windows.bat",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "06 Run experiment mode (full dataset)",
+            "type": "shell",
+            "command": ".\\app.exe experiment data\\Flickr8k_text\\Flickr8k.token.txt 0",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "dependsOn": "05 Build C++",
+            "problemMatcher": []
+        },
+        {
+            "label": "06b Run experiment mode (quick sample)",
+            "type": "shell",
+            "command": ".\\app.exe experiment data\\Flickr8k_sample.token.txt 5",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "dependsOn": "05 Build C++",
+            "problemMatcher": []
+        },
+        {
+            "label": "07 Run single mode",
+            "type": "shell",
+            "command": ".\\app.exe single \"sample_images\\1002674143_1b742ab4b8.jpg\" \"A child is playing outside\" --python \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\"",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "dependsOn": "05 Build C++",
+            "problemMatcher": []
+        },
+        {
+            "label": "08 Run web mode",
+            "type": "shell",
+            "command": ".\\app.exe web \"https://www.w3.org/WAI/tutorials/images/informative/\" 5 --python \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\" --classify-complexity",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "dependsOn": "05 Build C++",
+            "problemMatcher": []
+        },
+        {
+            "label": "09 Run calibrate mode (quick, ~3 min)",
+            "type": "shell",
+            "command": ".\\app.exe calibrate data\\Flickr8k_text\\ExpertAnnotations.txt data\\Flickr8k_text\\Flickr8k.token.txt --limit 30 --python \"M:\\VS_Code_Projects\\AIDACAT_ENG_v23\\test_env\\Scripts\\python.exe\"",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "dependsOn": "05 Build C++",
+            "problemMatcher": []
+        },
+        {
+            "label": "10 Clean output",
+            "type": "shell",
+            "command": "Remove-Item output\\*.csv -ErrorAction SilentlyContinue; Remove-Item output\\*.txt -ErrorAction SilentlyContinue; Remove-Item output\\downloaded_images\\* -ErrorAction SilentlyContinue",
+            "options": {
+                "cwd": "M:\\VS_Code_Projects\\AIDACAT_ENG_v23"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

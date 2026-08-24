@@ -1,0 +1,8 @@
+torch
+torchvision
+transformers==4.49.0
+pillow
+timm
+einops
+hf_xet
+sentence-transformers==4.1.0

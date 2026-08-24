@@ -1,0 +1,14 @@
+# Python virtual environment (recreate via requirements.txt)
+test_env/
+__pycache__/
+*.pyc
+
+# Build artifact (regenerate via build_windows.bat)
+app.exe
+
+# Generated output
+output/
+
+# OS cruft
+Thumbs.db
+.DS_Store
